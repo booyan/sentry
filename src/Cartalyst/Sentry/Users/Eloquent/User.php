@@ -26,6 +26,7 @@ use Cartalyst\Sentry\Users\PasswordRequiredException;
 use Cartalyst\Sentry\Users\UserAlreadyActivatedException;
 use Cartalyst\Sentry\Users\UserExistsException;
 use Cartalyst\Sentry\Users\UserInterface;
+use Carbon\Carbon;
 
 class User extends Model implements UserInterface {
 
@@ -976,4 +977,13 @@ class User extends Model implements UserInterface {
 		return static::$loginAttribute;
 	}
 
+    /**
+     * Get a fresh timestamp for the model.
+     *
+     * @return \Carbon\Carbon
+     */
+    public function freshTimestamp()
+    {
+        return new Carbon(null, 'Asia/Tokyo');
+    }
 }
