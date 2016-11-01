@@ -291,10 +291,15 @@ class User extends Model implements UserInterface {
 		{
 			throw new PasswordRequiredException("A password is required for user [$login], none given.");
 		}
+        if (empty($this->attributes['blog_id'])) {
+            throw new LoginRequiredException("A blog_id is required for a user, none given.");
+        }
+        $blog_id = $this->attributes['blog_id'];
 
-		// Check if the user already exists
+
+        // Check if the user already exists
 		$query = $this->newQuery();
-		$persistedUser = $query->where($this->getLoginName(), '=', $login)->first();
+		$persistedUser = $query->where($this->getLoginName(), '=', $login)->where('blog_id', $blog_id)->first();
 
 		if ($persistedUser and $persistedUser->getId() != $this->getId())
 		{
